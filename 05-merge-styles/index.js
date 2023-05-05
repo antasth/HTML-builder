@@ -18,6 +18,7 @@ const mergeStyles = (dir) => {
           fs.readFile(filePath, 'utf-8', (error, data) => {
             if(error) throw error
             bundle.write(data)
+            bundle.write('\n')
           })
         }
       })
