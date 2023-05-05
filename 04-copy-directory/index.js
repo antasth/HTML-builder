@@ -4,6 +4,17 @@ const path = require('path')
 const dirPath = path.join(__dirname, 'files')
 const dirCopyPath = path.join(__dirname, 'files-copy')
 
+const clearFolder = (dir) => {
+  fs.readdir(dir, (error, files) => {
+    if (error) throw error
+    files.forEach((file) => {
+      let filePath = path.join(dir, file)
+      fs.unlink(filePath, (error) => {
+        if (error) throw error
+      })
+    })
+  })
+}
 const copyFiles = (pathFrom, pathTo) => {
   fs.readdir(pathFrom, (error, files) => {
     if (error) throw error
@@ -29,6 +40,7 @@ const copyFiles = (pathFrom, pathTo) => {
 fsPromises
   .mkdir(dirCopyPath, { recursive: true })
   .then(function () {
+    clearFolder(dirCopyPath)
     copyFiles(dirPath, dirCopyPath)
   })
   .catch(function () {
