@@ -9,6 +9,11 @@ const assetsCopyPath = path.join(__dirname, 'project-dist', 'assets')
 const templatePath = path.join(__dirname, 'template.html')
 const componentsPath = path.join(__dirname, 'components')
 
+async function removeDir(dirPath) {
+ await fsPromises.rm(dirPath, { recursive: true, force:  true }, (err) => {
+    console.error(err)
+  })
+}
 async function createDir(dirPath) {
   fsPromises.mkdir(dirPath, { recursive: true })
 }
@@ -97,6 +102,7 @@ const copyFiles = async (pathFrom, pathTo) => {
 }
 
 async function buildPage() {
+  await removeDir(distPath)
   await createDir(distPath)
   const templateData = await readFile(templatePath)
   const components = await getComponents(templateData)
