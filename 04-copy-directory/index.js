@@ -15,7 +15,7 @@ const clearFolder = (dir) => {
     });
   });
 };
-const copyFiles = (pathFrom, pathTo) => {
+const copyDir = (pathFrom, pathTo) => {
   fs.readdir(pathFrom, (error, files) => {
     if (error) throw error;
 
@@ -41,7 +41,7 @@ fsPromises
   .mkdir(dirCopyPath, { recursive: true })
   .then(function () {
     clearFolder(dirCopyPath);
-    copyFiles(dirPath, dirCopyPath);
+    copyDir(dirPath, dirCopyPath);
   })
   .catch(function () {
     console.log("failed to create directory");
